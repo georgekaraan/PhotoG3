@@ -213,7 +213,7 @@ const Index = () => {
             letterSpacing={".5px"}
             color="#FFFADA"
           >
-            Welcome to Photo Mint Gee !
+            Welcome to PhotoG3 !
           </Text>
 
           <Accordion
