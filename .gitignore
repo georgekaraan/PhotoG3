@@ -1,0 +1,7 @@
+*/node_modules/
+*/node_modules/
+backend/public
+frontend/build
+Photos copy.json
+Photos.json
+backend/.env

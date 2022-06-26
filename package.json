@@ -1,0 +1,16 @@
+{
+    "name": "g-photo-minter-final-1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "cd frontend && npm run build",
+        "heroku-postbuild": "npm run build && npm run deploy",
+        "heroku-prebuild": "cd frontend && npm  install && cd ../backend && npm install ",
+        "deploy": "cp -a frontend/build/. backend/public/",
+        "start": "cd backend && npm run start"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

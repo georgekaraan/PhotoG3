@@ -1,0 +1,44 @@
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-button {
+    padding: 1em;
+    font-size: 2em;
+    margin: 1em;
+    background-color: #61dafb;
+}
+
+.filter {
+    margin-top: 2em;
+}
+
+.filter span {
+    background-color: antiquewhite;
+}
+
+.filter.open .accordion-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-right-anim {
+    animation: left-right 2s ease-in-out var(--anim-delay) infinite alternate-reverse forwards;
+}
+
+@keyframes left-right {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: 90%;
+    }
+}
+
+.accordion-main {
+    color: #FFFADA !important
+}

@@ -1,0 +1,33 @@
+#admin-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#admin-page img {
+    width: 100px;
+    height: 100px;
+}
+
+#admin-page span {
+    margin: 1em;
+}
+
+#admin-page input,
+#admin-page textarea {
+    padding: 1em;
+    margin: 1em;
+    min-width: 50vw;
+}
+
+.ready-btn {
+    margin-top: 2em;
+    padding: 2em;
+    font-size: 2em;
+    background-color: rgb(23, 158, 23);
+}
+
+input,
+textarea {
+    outline: 1px solid #222;
+}
