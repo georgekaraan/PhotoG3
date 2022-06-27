@@ -7,7 +7,12 @@ class TraitsController {
         console.log("GetTraits");
         try {
             const traits = await Traits.findAll({
-                where: {},
+                attributes: ["id", "name"],
+                include: {
+                    attributes: [],
+                    model: ImageTraits,
+                    required: true,
+                },
             });
             res.json(traits);
         } catch {

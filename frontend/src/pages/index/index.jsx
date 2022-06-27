@@ -127,6 +127,15 @@ const Index = () => {
           });
           return;
         }
+
+        setTimeout(() => {
+          ImagesService.UnFrozeImage(image.path).then(
+            (resp, err) => console.log(resp) || console.log(err)
+          );
+
+          //5 mins to commit transfer
+        }, 1000 * 60 * 5);
+
         setIsModelOpen(false);
 
         toast({
@@ -156,7 +165,14 @@ const Index = () => {
             description: <ToastTemplate />,
           });
           RenewUserInfo();
+          ImagesService.DeleteImage(image.path).then(
+            (resp, err) => console.log(resp) || console.log(err)
+          );
         } catch (error) {
+          ImagesService.UnFrozeImage(image.path).then(
+            (resp, err) => console.log(resp) || console.log(err)
+          );
+
           toast({
             isClosable: true,
             status: "error",

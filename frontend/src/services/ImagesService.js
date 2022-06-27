@@ -40,6 +40,32 @@ class ImagesSerive {
             }),
         }).then((res) => res.json());
     }
+
+    async UnFrozeImage(ipfsCode) {
+        return fetch(root + "api/images/", {
+            method: "PUT",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                imageIpfs: ipfsCode,
+            }),
+        }).then((res) => res.json());
+    }
+
+    async DeleteImage(ipfsCode) {
+        return fetch(root + "api/images/", {
+            method: "Delete",
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                imageIpfs: ipfsCode,
+            }),
+        }).then((res) => res.json());
+    }
 }
 
 export default new ImagesSerive();

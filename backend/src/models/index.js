@@ -9,7 +9,7 @@ Trait.belongsToMany(Images, { through: ImageTraits });
 Trait.hasMany(ImageTraits);
 ImageTraits.belongsTo(Trait);
 
-Images.ToIPFSDTO = async function() {
+Images.ToIPFSDTO = async function () {
     //returns image as in format given in dummy data
     const result = {
         name: this.name,

@@ -5,17 +5,14 @@ const ipfs = create("https://ipfs.infura.io:5001");
 
 class IPFSSerice {
     async ipfsUpload(imageJSON) {
-        console.log(imageJSON);
         const files = [{
             path: "/",
             content: JSON.stringify(imageJSON),
-        }, ];
+        },];
 
         const result = await ipfs.addAll(files);
 
         for await (const item of result) {
-            console.log(item);
-
             return item;
         }
     }

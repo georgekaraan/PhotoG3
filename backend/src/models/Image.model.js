@@ -23,6 +23,16 @@ Image.init({
         allowNull: false,
         unique: true,
     },
+    ipfs: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    isFrozen: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+    },
 }, {
     sequelize,
     modelName: "Image",

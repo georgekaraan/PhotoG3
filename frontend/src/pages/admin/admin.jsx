@@ -33,7 +33,6 @@ const Admin = () => {
                 return result;
               } catch (er) {
                 alert("Error happened with " + name + " image " + image);
-                throw er;
               }
             }
           );
@@ -53,7 +52,7 @@ const Admin = () => {
           }).then((el) => alert(JSON.stringify(el)));
         }
       } catch (error) {
-        alert(JSON.stringify(error));
+        alert("There is an error with the pasted JSON");
       }
       return;
     }
@@ -92,13 +91,14 @@ const Admin = () => {
       />
       <h3>Attibutes</h3>
       {attributes.map((el, i) => {
+        const copy = i;
         return (
-          <span key={i}>
+          <div key={copy}>
             <input
               type="text"
-              value={el.key}
+              value={el.trait_type}
               onChange={(e) => {
-                attributes[i].key = e.target.value;
+                attributes[copy].trait_type = e.target.value;
                 setAttributes([...attributes]);
               }}
             />
@@ -106,14 +106,14 @@ const Admin = () => {
               type="text"
               value={el.value}
               onChange={(e) => {
-                attributes[i].value = e.target.value;
+                attributes[copy].value = e.target.value;
                 setAttributes([...attributes]);
               }}
             />
-          </span>
+          </div>
         );
       })}
-      <div>
+      <div className="controls">
         <button
           onClick={() =>
             setAttributes([

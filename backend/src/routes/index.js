@@ -8,7 +8,9 @@ const router = Express.Router();
 router.use("*", (req, res, next) => {
     console.log(
         "\x1b[31m",
-        req.protocol + "://" + req.get("host") + req.originalUrl
+        req.protocol + "://" + req.get("host") + req.originalUrl,
+        " ",
+        req.method
     );
     console.log("\x1b[0m", "");
     next();
@@ -30,6 +32,12 @@ router.post(
 );
 
 router.post("/images/", WrappControllerMethod(ImagesController.AddImage));
+
+router.put("/images/", WrappControllerMethod(ImagesController.UndoImageFroze));
+router.delete(
+    "/images/",
+    WrappControllerMethod(ImagesController.FullDeleteImage)
+);
 
 router.get("/traits/", WrappControllerMethod(TraitsController.GetTraits));
 router.get(

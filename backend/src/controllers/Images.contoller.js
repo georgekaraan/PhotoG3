@@ -2,8 +2,9 @@
 import { Images, Traits, ImageTraits, sequelize } from "../models/index.js";
 import { Transaction, QueryTypes } from "sequelize";
 import IPFSSerice from "../services/Ipfs.service.js";
+import IpfsService from "../services/Ipfs.service.js";
 
-const PASSWORD = "ChangeThisBeforeProduction";
+const PASSWORD = process.env.PASSWORD;
 
 class ImagesController {
     constructor() {
@@ -18,7 +19,7 @@ class ImagesController {
 
         const images = await sequelize.query(
             `Select * from "Images"
-        Where "Images".id IN(
+        Where "Images"."isFrozen"=false AND  "Images".id IN(
         SELECT "ImageTraits"."ImageId"  from "ImageTraits"
         LEFT JOIN "Traits" on "Traits".id="ImageTraits"."TraitId"
         WHERE "Traits".name ||' '||"ImageTraits".value IN (:array)
@@ -40,6 +41,7 @@ class ImagesController {
     async GetRandomImage(req, res, next) {
         const images = await sequelize.query(
             `Select *  from "Images"
+            WHERE "Images"."isFrozen"=false
         ORDER BY random()
         LIMIT 1 `, {
             type: QueryTypes.SELECT,
@@ -52,17 +54,13 @@ class ImagesController {
     async SendImage(images, res, next) {
         try {
             if (images[0] && images[0].id) {
-                await Images.destroy({
+                await Images.update({ isFrozen: true }, {
                     where: {
                         id: images[0].id,
                     },
                 });
 
-                const transformed = await IPFSSerice.ipfsUpload(
-                    await Images.ToIPFSDTO.call(images[0])
-                );
-
-                res.send(transformed);
+                res.send({ path: images[0].ipfs });
                 return;
             }
 
@@ -73,8 +71,38 @@ class ImagesController {
         }
     }
 
+    async UndoImageFroze(req, res, next) {
+        const { imageIpfs } = req.body;
+        const image = await Images.findOne({
+            where: {
+                ipfs: imageIpfs,
+            },
+        });
+        if (image) {
+            image.isFrozen = false;
+            await image.save();
+            res.json({ successful: true });
+        } else {
+            res.json({ Error: "No such image" });
+        }
+    }
+
+    async FullDeleteImage(req, res, next) {
+        const { imageIpfs } = req.body;
+        const image = await Images.findOne({
+            where: {
+                ipfs: imageIpfs,
+            },
+        });
+        if (image) {
+            await image.destroy();
+            res.json({ successful: true });
+        } else {
+            res.json({ Error: "No such image" });
+        }
+    }
+
     async AddImage(req, res, next) {
-        console.log("working");
         const body = req.body;
 
         if (body.password !== PASSWORD) {
@@ -94,8 +122,15 @@ class ImagesController {
             isolationLevel: Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED,
         });
         try {
-            const image = await Images.create({ name, url: imageUrl, description }, { transaction: t });
-            console.log(image);
+            const ipfs = await IpfsService.ipfsUpload({
+                name: name,
+                description: description,
+                image: imageUrl,
+                attributes: attributes,
+            });
+
+            const image = await Images.create({ name, url: imageUrl, description, ipfs: ipfs.path }, { transaction: t });
+            console.log(attributes);
             await Promise.all(
                 attributes.map(async ({ trait_type, value }) => {
                     const [trait, isCreated] = await Traits.findOrCreate({
