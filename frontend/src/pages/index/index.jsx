@@ -21,7 +21,8 @@ import ImagesService from "../../services/ImagesService";
 import GeorgePhotoMinter from "../../assets/GeorgePhotoMinter.json";
 import Head from "../../components/Head";
 const prefixURI = "https://gateway.pinata.cloud/ipfs/";
-const GeorgePhotoAddress = "0x43BcFfb1490C0Ca681258be1b9Df24604fa0F795";
+// const GeorgePhotoAddress = "0x43BcFfb1490C0Ca681258be1b9Df24604fa0F795";
+const GeorgePhotoAddress = "0x6982F4D68A961E7D17244fcA5cF67e2Cce072156";
 
 const ToastTemplate = () => (
   <span>
@@ -156,9 +157,9 @@ const Index = () => {
         const address = await signer.getAddress();
         const nonce = await signer.getTransactionCount();
         try {
-          await contractInstance.awardItemAL(address, tokenUri, {
-            nonce: nonce,
-          });
+          await contractInstance.awardItemAL(address, tokenUri,
+            { nonce: nonce }
+          );
           toast({
             isClosable: true,
             status: "success",
@@ -252,7 +253,7 @@ const Index = () => {
               <AccordionPanel pb={4}>
                 <Text fontSize={20}>
                   My name is George and I am a hobbyist photographer. I built this
-                  dApp as a final project for an Ethereum Development Bootcamp.
+                  dApp as a final project for ChainShot's Ethereum Development Bootcamp.
                 </Text>
                 <Text fontSize={20}>
                   As of now, this app works on an invite only basis. So make

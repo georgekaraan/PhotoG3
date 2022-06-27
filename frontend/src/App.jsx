@@ -62,7 +62,7 @@ function App() {
                 color: "green.100",
               }}
               as={Link}
-              href={`https://rinkeby.etherscan.io/address/`}
+              href={`https://rinkeby.etherscan.io/address/0x6982F4D68A961E7D17244fcA5cF67e2Cce072156#code`}
               isExternal
               icon={<Icon as={FaEthereum} w={7} h={7} />}
             />
@@ -88,7 +88,7 @@ function App() {
                 color: "green.100",
               }}
               as={Link}
-              href={"https://github.com/BraianVaylet/buildspace-epic-nfts-ui"}
+              href={"https://github.com/georgekaraan/PhotoG3"}
               isExternal
               icon={<Icon as={FaGithub} w={7} h={7} />}
             />
